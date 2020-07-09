@@ -49,7 +49,7 @@ int main() {
     Shader program("D:/CDEV/VisualStudioProjects/ProceduralGeneratedTerrain/ProceduralGeneratedTerrain/ProceduralGeneratedTerrain/Terrain.glsl");
 
     Terrain terrain(&program);
-    terrain.calculateMesh(3, glm::vec3(0.0f), 1.0f);
+    terrain.calculateMesh(50, glm::vec3(0.0f), 1.0f);
 
     Camera cam(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f));
 
@@ -61,18 +61,21 @@ int main() {
         });
 
     float time = glfwGetTime();
+    float dt;
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window))
     {
         // clear window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        float dt = glfwGetTime() - time;
+        dt = glfwGetTime() - time;
         time = glfwGetTime();
-        cam.checkInput(window,dt);
+        cam.checkInput(window, dt);
         // start here
+
         terrain.render(cam.view);
 
+        //
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

@@ -3,6 +3,9 @@
 #include <vector>
 #include "VertexArray.h"
 #include "Shader.h"
+#include <glm/gtc/noise.hpp>
+
+#define PERLIN_DIVISOR 15.0f
 
 class Terrain
 {
@@ -18,6 +21,7 @@ private:
 
     int m_Triangles;
     float m_Scale;
+    const float perlinDiv = 15.0f;
 public:
     Terrain(Shader* iprogram) : m_Program { iprogram }  { }
     ~Terrain() {

@@ -1,10 +1,14 @@
 #include "Terrain.h"
+#include <limits.h>
+#include <array>
 
 void Terrain::calculateMesh(int N, glm::vec3 ipos, float iscale) {
     delete vbo;
     delete ibo;
     delete vao;
-    m_Triangles = 2 * 3 * glm::exp2(N - 1);
+    m_Triangles = 2 * 3 * glm::pow(N, 2);
+    N++;
+    
     m_Pos = ipos;
     m_Scale = iscale;
     m_Mesh.clear();
@@ -12,7 +16,6 @@ void Terrain::calculateMesh(int N, glm::vec3 ipos, float iscale) {
     int index = 0;
     for (unsigned int i = 0; i < N; ++i) {
         for (unsigned int j = 0; j < N; ++j) {
-            m_Mesh.push_back({ glm::vec3(j + m_Pos.x, m_Pos.y, i + m_Pos.z), glm::vec3(0.0f, 1.0f,0.0f) });
             if ((j != N - 1) && (i != N - 1)) {
                 m_Indices.push_back(index); // wound counter-clockwise
                 m_Indices.push_back(index + 1);
@@ -22,6 +25,9 @@ void Terrain::calculateMesh(int N, glm::vec3 ipos, float iscale) {
                 m_Indices.push_back(index + N + 1);
                 m_Indices.push_back(index + N);
             }
+            
+            m_Mesh.push_back({ glm::vec3(j + m_Pos.x, m_Pos.y + glm::simplex(glm::vec2((float)(j + m_Pos.x) / perlinDiv, (float)(i + m_Pos.z) / perlinDiv)), i + m_Pos.z), glm::vec3(0.0f, 1.0f,0.0f) });
+            
             ++index;
         }
     }
