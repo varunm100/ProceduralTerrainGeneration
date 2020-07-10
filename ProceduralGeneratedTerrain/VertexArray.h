@@ -9,12 +9,12 @@ private:
 public:
 	inline VertexArray() { glCreateVertexArrays(1, &m_id); }
 
-	inline void addBuffer(unsigned int id, int typeOfBuffer, GLsizei stride) {
+	inline void addBuffer(Buffer* buffer, int typeOfBuffer, GLsizei stride) {
 		// 0 = vertexbuffer, 1 = elementbuffer
 		if (!typeOfBuffer)
-			glVertexArrayVertexBuffer(m_id, 0, id, 0, stride);
+			glVertexArrayVertexBuffer(m_id, 0, buffer->getId(), 0, stride);
 		else
-			glVertexArrayElementBuffer(m_id, id);
+			glVertexArrayElementBuffer(m_id, buffer->getId());
 	}
 	inline void addBuffers(Buffer* vb, Buffer* ib, GLsizei stride) {
 		glVertexArrayVertexBuffer(m_id, 0, vb->getId(), 0, stride);

@@ -50,4 +50,5 @@ public:
 
 	inline void setMat4(const char* uniform, glm::mat4& matrix) { glUniformMatrix4fv(glGetUniformLocation(m_Program, uniform), 1, GL_FALSE, &matrix[0][0]); }
 	inline void setFloat(const char* uniform, float& f) { glUniform1f(glGetUniformLocation(m_Program, uniform),  f); }
+	inline void setVec3(const char* uniform, glm::vec3 vector) { glUniform3fv(glGetUniformLocation(m_Program, uniform), 1, &vector[0]); }
 };
